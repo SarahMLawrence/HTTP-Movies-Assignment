@@ -10,7 +10,7 @@ const initialMovie = {
   stars: "",
 };
 
-const UpdateForm = (props) => {
+const UpdateForm = props => {
   const { push } = useHistory();
   const [movie, setMovie] = useState(initialMovie);
   const { id } = useParams();
@@ -42,7 +42,8 @@ const UpdateForm = (props) => {
       .put(`http://localhost:5000/api/movies/${id}`, movie)
       .then((res) => {
         props.setMovie(res.data);
-        push(`/movies/$${id}`);
+        // window.location.reload(true);
+        push(`/`);
       })
       .catch((err) => console.log(err));
   };

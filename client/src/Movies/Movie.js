@@ -27,6 +27,13 @@ function Movie({ addToSavedList }) {
     return <div>Loading movie information...</div>;
   }
 
+  //--------------------------------//
+  //          EDIT MOVIE            //
+  //--------------------------------//
+  const updateMovie = () => {
+    push(`/update-movie/${movie.id}`);
+  }
+
   return (
     <div className="save-wrapper">
       <MovieCard movie={movie} />
@@ -35,10 +42,7 @@ function Movie({ addToSavedList }) {
         Save
       </div>
 
-      <button
-        className="md-button"
-        onClick={() => push(`/update-movie/${movie.id}`)}
-      >
+      <button className="md-button" onClick={updateMovie}>
         Edit
       </button>
     </div>
