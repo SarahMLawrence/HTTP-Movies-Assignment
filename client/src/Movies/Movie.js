@@ -3,11 +3,14 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import MovieCard from "./MovieCard";
 
-function Movie({ addToSavedList }) {
+function Movie({ addToSavedList, getMovieList  }) {
   const [movie, setMovie] = useState(null);
   const params = useParams();
   const { push } = useHistory();
 
+  //---------------------------------------//
+  //  Fetch Movie Data using a Get Request //
+  //---------------------------------------//
   const fetchMovie = (id) => {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
@@ -15,23 +18,49 @@ function Movie({ addToSavedList }) {
       .catch((err) => console.log(err.response));
   };
 
+  //----------------------//
+  //  Save Selected Movie //
+  //----------------------//
   const saveMovie = () => {
     addToSavedList(movie);
   };
 
+  
+  //--------------------------------//
+  //          Update MOVIE          //
+  //        * Update a resource     //
+  //--------------------------------//
+  const updateMovie = () => {
+    push(`/update-movie/${movie.id}`);
+  }
+
+
+  //--------------------------------//
+  //        DELETE MOVIE            //       
+  //     * Delete a resource        //
+  //--------------------------------//
+  const deleteMovie = (e) => {
+    e.preventDefault();
+      axios
+        .delete(`http://localhost:5000/api/movies/${params.id}`)
+        .then(() => {
+          setMovie(movie);
+        //  window.location.reload(true);
+          push('/');
+          window.location.reload(true);
+        })
+        .catch((err) => console.log(err));
+    };
+
+  //============================//
+  // GET REQUEST via fetchMovie //
+  //============================//
   useEffect(() => {
     fetchMovie(params.id);
   }, [params.id]);
 
   if (!movie) {
     return <div>Loading movie information...</div>;
-  }
-
-  //--------------------------------//
-  //          EDIT MOVIE            //
-  //--------------------------------//
-  const updateMovie = () => {
-    push(`/update-movie/${movie.id}`);
   }
 
   return (
@@ -45,6 +74,10 @@ function Movie({ addToSavedList }) {
       <button className="md-button" onClick={updateMovie}>
         Edit
       </button>
+
+      <button className="delete-button" onClick={deleteMovie}>
+        Delete
+        </button>
     </div>
   );
 }

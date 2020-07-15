@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
-const initialMovie = {
-  id: "",
-  title: "",
-  director: "",
-  metascore: "",
-  stars: "",
-};
+// const initialMovie = {
+//   id: "",
+//   title: "",
+//   director: "",
+//   metascore: "",
+//   stars: "",
+// };
 
-const UpdateForm = props => {
-  const { push } = useHistory();
-  const [movie, setMovie] = useState(initialMovie);
+const UpdateForm = (props) => {
+  const [movie, setMovie] = useState('');
+  const { title, director, metascore, stars } = movie;
   const { id } = useParams();
+  const { push } = useHistory();
 
   useEffect(() => {
     axios
@@ -41,48 +42,48 @@ const UpdateForm = props => {
     axios
       .put(`http://localhost:5000/api/movies/${id}`, movie)
       .then((res) => {
-        props.setMovie(res.data);
+        setMovie(res.data);
         // window.location.reload(true);
-        push(`/`);
+        push(`/movies/${movie.id}`);
       })
       .catch((err) => console.log(err));
   };
 
   return (
     <div>
-      <h2>Update Movie</h2>
+      <h2 className="update-form">Update Movie</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
           onChange={changeHandler}
           placeholder="Title"
-          value={movie.title}
+          value={title}
         />
         <input
           type="text"
           name="director"
           onChange={changeHandler}
           placeholder="Director"
-          value={movie.director}
+          value={director}
         />
         <input
           type="number"
           name="metascore"
           onChange={changeHandler}
           placeholder="Metascore"
-          value={movie.metascore}
+          value={metascore}
         />
         <input
             type="string"
             name="stars"
             onChange={changeHandler}
             placeholder="Stars"
-            value={movie.stars}
+            value={stars}
         />
         <div className="baseline" />
 
-        <button className="md-button form-button">Update</button>
+        <button className="form-button">Update</button>
       </form>
     </div>
   );
