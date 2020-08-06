@@ -75,3 +75,47 @@ body {
   color: red;
   text-align: center;
 }
+
+/* Update form styling */
+form {
+  margin: 0 auto;
+  width: 300px;
+}
+
+input {
+  border: 0;
+  /* outline: none; */
+}
+input:hover{
+  background-color: tomato;
+}
+
+.baseline,
+input {
+  background-color: #fff;
+  font-size: 21px;
+  height: 50px;
+  width: 300px;
+  padding: 0 8px;
+  color: #1c5d76;
+}
+
+
+
+.form-button {
+  position: absolute;
+  /* top: 25px; */
+  /* right: 25px; */
+  border: 1px solidred;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+.form-button:hover {
+  background-color: tomato;
+  color: white;
+}
+
+.update-form{
+  text-align: center;
+  
+}
